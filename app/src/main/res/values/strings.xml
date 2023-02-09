@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">QuickRead</string>
+
+    <!-- MainActivity page -->
+    <string name="app_hint1_tv">Touch with update news</string>
+    <string name="app_hint2_tv">Get the recent news everyday with DailyNews</string>
+
+    <string name="app_content_description">App Content Description</string>
+    <!-- Button -->
+    <string name="explore_news_btn">Explore News</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_account">Account</string>
+    <string name="title_bookmark">Bookmark</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
