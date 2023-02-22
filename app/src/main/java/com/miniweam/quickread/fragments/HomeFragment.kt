@@ -1,4 +1,4 @@
-package com.miniweam.quickread
+package com.miniweam.quickread.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.miniweam.quickread.DummyItem.getCategories
 import com.miniweam.quickread.DummyItem.getData
+import com.miniweam.quickread.adapters.FeedsAdapter
+import com.miniweam.quickread.adapters.FeedsCategoryAdapter
 import com.miniweam.quickread.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {

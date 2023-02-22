@@ -1,4 +1,4 @@
-package com.miniweam.quickread
+package com.miniweam.quickread.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.miniweam.quickread.databinding.FeedsViewholderBinding
+import com.miniweam.quickread.ItemsWithCategories
+import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.SearchResultViewholderBinding
 
-class FeedsSearchAdapter:  ListAdapter<ItemsWithCategories, FeedsSearchAdapter.ViewHolder>(diffObject) {
+class FeedsSearchAdapter:  ListAdapter<ItemsWithCategories, FeedsSearchAdapter.ViewHolder>(
+    diffObject
+) {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = SearchResultViewholderBinding.bind(view)
         fun bind(item: ItemsWithCategories) {

@@ -1,4 +1,4 @@
-package com.miniweam.quickread
+package com.miniweam.quickread.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.miniweam.quickread.ItemsWithCategories
+import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.FeedsViewholderBinding
 
 class FeedsAdapter : ListAdapter<ItemsWithCategories, FeedsAdapter.ViewHolder>(diffObject) {
