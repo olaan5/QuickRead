@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
-        android:name="com.miniweam.quickread.BookmarkFragment"
+        android:name="com.miniweam.quickread.fragments.BookmarkFragment"
         android:label="fragment_bookmark"
         tools:layout="@layout/fragment_bookmark" />
 </navigation>
