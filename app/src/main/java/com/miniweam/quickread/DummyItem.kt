@@ -119,7 +119,6 @@ object DummyItem {
                     timeStamp = 11
                 )
             )
-
         }
     }
 }

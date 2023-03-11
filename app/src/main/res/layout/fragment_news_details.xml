@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="9dp"
+    tools:context=".fragments.NewsDetailsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ImageView
+        android:id="@+id/arrow_back_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="9dp"
+        android:src="@drawable/ic_arrow_back_ios"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="9dp"
+        android:text="@string/news_title_header_tv"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/arrow_back_iv" />
+
+    <ImageView
+        android:id="@+id/creator_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/rectangle_27"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/creator_tv"
+        style="@style/TextAppearance.AppCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="@string/news_title_header_tv"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/creator_iv"
+        app:layout_constraintTop_toTopOf="@+id/creator_iv" />
+
+    <TextView
+        android:id="@+id/date_pub_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="@string/news_title_header_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/creator_iv"
+        app:layout_constraintStart_toEndOf="@+id/creator_iv" />
+
+    <ImageView
+        android:id="@+id/bookmark_iv"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_bookmark"
+        app:layout_constraintBottom_toBottomOf="@+id/creator_iv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/creator_iv" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="9dp"
+        android:src="@drawable/rectangle_7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_pub_tv" />
+
+    <TextView
+        android:id="@+id/news_summary"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="18dp"
+        android:textSize="18sp"
+        android:layout_marginEnd="9dp"
+        android:text="@string/text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
