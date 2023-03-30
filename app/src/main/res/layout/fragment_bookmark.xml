@@ -4,17 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BookmarkFragment">
+    tools:context=".fragments.BookmarkFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
+        android:id="@+id/holder_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_bookmark"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="15dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/holder_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
         style="@style/TextAppearance.AppCompat.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="Bookmark"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/holder_icon"
+        app:layout_constraintStart_toEndOf="@+id/holder_icon"
+        app:layout_constraintTop_toTopOf="@+id/holder_icon" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/newsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:listitem="@layout/feeds_viewholder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
