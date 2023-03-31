@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_accountFragment"
             app:destination="@id/accountFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_newsSummaryFragment"
+            app:destination="@id/newsSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/accountFragment"
@@ -22,10 +25,26 @@
         <action
             android:id="@+id/action_accountFragment_to_bookmarkFragment"
             app:destination="@id/bookmarkFragment" />
+        <action
+            android:id="@+id/action_accountFragment_to_newsSummaryFragment"
+            app:destination="@id/newsSummaryFragment" />
     </fragment>
     <fragment
         android:id="@+id/bookmarkFragment"
         android:name="com.miniweam.quickread.fragments.BookmarkFragment"
         android:label="fragment_bookmark"
-        tools:layout="@layout/fragment_bookmark" />
+        tools:layout="@layout/fragment_bookmark" >
+        <action
+            android:id="@+id/action_bookmarkFragment_to_newsSummaryFragment"
+            app:destination="@id/newsSummaryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsSummaryFragment"
+        android:name="com.miniweam.quickread.fragments.NewsSummaryFragment"
+        android:label="fragment_news_summary"
+        tools:layout="@layout/fragment_news_summary" >
+        <argument
+            android:name="news_id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

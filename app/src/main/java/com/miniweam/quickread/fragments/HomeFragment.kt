@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.miniweam.quickread.DummyItem.getCategories
 import com.miniweam.quickread.DummyItem.getData
 import com.miniweam.quickread.adapters.FeedsAdapter
@@ -44,9 +45,19 @@ class HomeFragment : Fragment() {
         binding.newsRecyclerView.adapter = feedsAdapter
         binding.categoryRecyclerView.adapter = categoryAdapter
 
-//        feedsAdapter.submitList(getData())
         categoryAdapter.submitList(getCategories())
-        getHomeFeeds()
+        lifecycleScope.launch {
+            viewModel.homeFirstRun.collect{
+                if (it){
+                    getHomeFeeds()
+                }
+            }
+        }
+
+        feedsAdapter.adapterClick {
+            val action = HomeFragmentDirections.actionHomeFragmentToNewsSummaryFragment(it.id)
+            findNavController().navigate(action)
+        }
 
 
 

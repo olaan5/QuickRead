@@ -17,6 +17,9 @@ class FeedsViewModel : ViewModel() {
     var newsFeedFlow = MutableStateFlow<FeedState>(FeedState.Loading)
         private set
 
+    var homeFirstRun = MutableStateFlow(true)
+        private set
+
     fun getAllFeeds() {
         allHomeFeedsFlow.value = FeedState.Loading
         viewModelScope.launch {
@@ -36,23 +39,11 @@ sealed class FeedState {
     object Loading : FeedState()
     data class Failure(val msg: String) : FeedState()
     class Successful : FeedState {
-//        lateinit var allHomeFeeds: List<Data>
-//        lateinit var newsFeed: NewsData
         lateinit var allResponseBody: QrAllResponse
         lateinit var newsResponseBody: QrNewsResponse
-
-      /*  constructor(data: List<Data>) {
-            this.allHomeFeeds = data
-        }
-
-        constructor(data: NewsData) {
-            this.newsFeed = data
-        }*/
-
         constructor(data: QrAllResponse) {
             this.allResponseBody = data
         }
-
         constructor(data: QrNewsResponse) {
             this.newsResponseBody = data
         }

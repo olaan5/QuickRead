@@ -22,15 +22,20 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = FeedsViewholderBinding.bind(view)
         fun bind(item: Data) {
-            binding.feedTitle.text = item.title
-            binding.categoryText.text = "Category"
-            binding.sourceText.text = "Source"
-            binding.timeStamp.text = getDateFormat(item.datePublished)
-            binding.feedImage.load(item.imgUrl){
-                crossfade(true)
-                error(R.drawable.error_outline_24)
-                scale(Scale.FILL)
-                placeholder(R.drawable.ic_launcher_foreground)
+            binding.apply {
+                feedTitle.text = item.title
+                categoryText.text = "Category"
+                sourceText.text = "Source"
+                timeStamp.text = getDateFormat(item.datePublished)
+                feedImage.load(item.imgUrl) {
+                    crossfade(true)
+                    error(R.drawable.error_outline_24)
+                    scale(Scale.FILL)
+                    placeholder(R.drawable.ic_launcher_foreground)
+                }
+                root.setOnClickListener {
+                    listener?.let { it(item) }
+                }
             }
         }
 

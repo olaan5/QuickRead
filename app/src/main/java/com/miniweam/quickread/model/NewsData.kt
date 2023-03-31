@@ -6,8 +6,9 @@ data class NewsData(
     @SerializedName("date_published")
     val datePublished:String,
     val id:Int,
-    @SerializedName("image_url")
+    @SerializedName("img_url")
     val imageUrl:String,
     val source:String,
-    val title:String
+    val title:String,
+    val content:String
 )
