@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i); // invoke the SecondActivity.
                 finish(); // the current activity will get finished.
             }
-        }, 3000L);
+        }, 2000L);
     }
 
 

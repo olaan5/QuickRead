@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.miniweam.quickread.ItemsWithCategories
 import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.SearchResultViewholderBinding
@@ -21,6 +22,11 @@ class FeedsSearchAdapter:  ListAdapter<Data, FeedsSearchAdapter.ViewHolder>(diff
         fun bind(item: Data) {
             binding.feedTitle.text = item.title
             binding.timeStamp.text = getDateFormatAsPeriod(item.datePublished)
+            binding.feedImage.load(item.imgUrl) {
+                crossfade(true)
+                error(R.drawable.error_outline_24)
+                placeholder(R.drawable.ic_launcher_foreground)
+            }
             binding.root.setOnClickListener {
                 listener?.let { it(item) }
             }

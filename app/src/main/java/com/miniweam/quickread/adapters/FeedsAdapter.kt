@@ -28,7 +28,7 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
                 categoryText.text = "Category"
                 sourceText.text = "Source"
                 timeStamp.text = getDateFormatAsPeriod(item.datePublished)
-                feedImage.clipToOutline = true
+
                 feedImage.load(item.imgUrl) {
                     crossfade(true)
                     error(R.drawable.error_outline_24)

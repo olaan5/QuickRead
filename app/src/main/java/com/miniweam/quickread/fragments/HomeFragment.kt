@@ -89,31 +89,4 @@ class HomeFragment : Fragment() {
         }
     }}
 
-    private fun getTestData(){
-        binding.holderIcon.setOnClickListener {
-            Log.d("JOE", "API RESPONSE : Loading... ")
-            lifecycleScope.launch {
-                try {
-                    val body = ApiService.qrApiService.getAllNews()
-                    Log.d("JOE", "API RESPONSE (size: ${body.body()?.data?.size}): ${body.body()} ")
-                }catch(e:Exception){
-                    Log.d("JOE", "API RESPONSE : ERROR $e ")
-                }
-            }
-
-        }
-        binding.textView.setOnClickListener {
-            Log.d("JOE", "API RESPONSE : Loading..... ")
-            lifecycleScope.launch {
-                try {
-                    val body = ApiService.qrApiService.getNews(1)
-                    Log.d("JOE", "API RESPONSE (single): ${body.body()} ")
-                }catch(e:Exception){
-                    Log.d("JOE", "API RESPONSE : ERROR $e ")
-                }
-            }
-
-        }
-
-    }
 }
