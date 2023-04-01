@@ -20,6 +20,7 @@ import com.miniweam.quickread.arch.FeedState
 import com.miniweam.quickread.arch.FeedsViewModel
 import com.miniweam.quickread.databinding.FragmentBookmarkBinding
 import com.miniweam.quickread.databinding.FragmentNewsSummaryBinding
+import com.miniweam.quickread.util.DEFAULT_DATE_FORMAT
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
@@ -76,7 +77,6 @@ class NewsSummaryFragment : Fragment() {
                         authorText.text ="Unknown Author"
                         timestampText.text =getDateFormat(state.newsResponseBody.data.datePublished)
                         newsImg.load(state.newsResponseBody.data.imageUrl){
-//                            scale(Scale.FILL)
                             placeholder(R.drawable.ic_launcher_foreground)
                             error(R.drawable.error_outline_24)
                         }
@@ -105,9 +105,9 @@ class NewsSummaryFragment : Fragment() {
 
     private  fun getDateFormat(date: String):String{
         val format =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            DateTimeFormatter.ofPattern(DEFAULT_DATE_FORMAT)
         val localDate = LocalDateTime.parse(date, format)
-        val dateFormatter = DateTimeFormatter.ofPattern("d'th' MMM, yyyy", Locale.getDefault())
+        val dateFormatter = DateTimeFormatter.ofPattern("d'th' MMMM, yyyy", Locale.getDefault())
         return localDate.format(dateFormatter)
     }
 

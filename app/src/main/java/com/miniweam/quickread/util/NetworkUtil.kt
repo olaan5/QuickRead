@@ -15,7 +15,7 @@ import retrofit2.http.Path
 
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-private val BASE_URL = "https://qrapi.bxpats.com/"
+private const val BASE_URL = "https://qrapi.bxpats.com/"
 
 private val qrRetrofit = Retrofit.Builder()
     .client(getOkHttp())

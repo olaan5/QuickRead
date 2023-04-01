@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         exploreNewsBtn = findViewById(R.id.explore_news_btn);
 
-        exploreNewsBtn.setOnClickListener(View ->
-                startActivity(new Intent(MainActivity.this, ExploreNewsActivity.class)));
+//        exploreNewsBtn.setOnClickListener(View ->
+//                startActivity(new Intent(MainActivity.this, ExploreNewsActivity.class)));
 
         new Handler().postDelayed(new Runnable() {
             @Override

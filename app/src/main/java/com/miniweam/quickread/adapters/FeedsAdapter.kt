@@ -14,6 +14,7 @@ import com.miniweam.quickread.ItemsWithCategories
 import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.FeedsViewholderBinding
 import com.miniweam.quickread.model.Data
+import com.miniweam.quickread.util.getDateFormatAsPeriod
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -26,11 +27,11 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
                 feedTitle.text = item.title
                 categoryText.text = "Category"
                 sourceText.text = "Source"
-                timeStamp.text = getDateFormat(item.datePublished)
+                timeStamp.text = getDateFormatAsPeriod(item.datePublished)
+                feedImage.clipToOutline = true
                 feedImage.load(item.imgUrl) {
                     crossfade(true)
                     error(R.drawable.error_outline_24)
-                    scale(Scale.FILL)
                     placeholder(R.drawable.ic_launcher_foreground)
                 }
                 root.setOnClickListener {
@@ -73,25 +74,5 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
     private var listener: ((Data) -> Unit)? = null
     fun adapterClick(listener: (Data) -> Unit) {
         this.listener = listener
-    }
-
-
-
-    private  fun getDateFormat(date: String):String{
-        val format =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
-        val localDate = LocalDateTime.parse(date, format)
-        val dateFormatter = DateTimeFormatter.ofPattern("EEE, MMM d, yyyy 'at' hh:mm a", Locale.getDefault())
-        val currentTime = LocalDateTime.now()
-
-        val day = currentTime.dayOfYear-localDate.dayOfYear
-        if (day > 7){
-            return "Some time ago"
-        }
-        if (day == 7){
-            return  "a week ago"
-        }
-
-        return( currentTime.hour-localDate.hour).toString()+"hrs ago" //localDate.format(dateFormatter)
     }
 }

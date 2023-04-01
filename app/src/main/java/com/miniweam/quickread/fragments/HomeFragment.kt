@@ -49,11 +49,12 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.homeFirstRun.collect{
                 if (it){
-                    getHomeFeeds()
+                    viewModel.getAllFeeds()
+                    viewModel.toggleHomeFirstRun(false)
                 }
             }
         }
-
+        getHomeFeeds()
         feedsAdapter.adapterClick {
             val action = HomeFragmentDirections.actionHomeFragmentToNewsSummaryFragment(it.id)
             findNavController().navigate(action)
@@ -64,7 +65,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun getHomeFeeds(){
-        viewModel.getAllFeeds()
         lifecycleScope.launch {
         viewModel.allHomeFeedsFlow.collect{state->
             when(state){
@@ -81,8 +81,8 @@ class HomeFragment : Fragment() {
                 }
                 is FeedState.Failure->{
                     binding.progressBar.isVisible = false
-                    binding.emptyStateTv.isVisible = false
-                    binding.newsRecyclerView.isVisible = true
+                    binding.emptyStateTv.isVisible = true
+                    binding.newsRecyclerView.isVisible = false
                     binding.emptyStateTv.text = state.msg
                 }
             }
