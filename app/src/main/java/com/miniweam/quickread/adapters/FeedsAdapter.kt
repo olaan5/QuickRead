@@ -1,23 +1,43 @@
 package com.miniweam.quickread.adapters
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.size.Scale
 import com.miniweam.quickread.ItemsWithCategories
 import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.FeedsViewholderBinding
-
-class FeedsAdapter : ListAdapter<ItemsWithCategories, FeedsAdapter.ViewHolder>(diffObject) {
+import com.miniweam.quickread.model.Data
+import com.miniweam.quickread.util.getDateFormatAsPeriod
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+@RequiresApi(Build.VERSION_CODES.O)
+class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = FeedsViewholderBinding.bind(view)
-        fun bind(item: ItemsWithCategories) {
-            binding.feedTitle.text = item.content
-            binding.categoryText.text = item.category
-            binding.sourceText.text = item.source
-            binding.timeStamp.text ="${item.timeStamp}hrs ago"
+        fun bind(item: Data) {
+            binding.apply {
+                feedTitle.text = item.title
+                categoryText.text = "Category"
+                sourceText.text = "Source"
+                timeStamp.text = getDateFormatAsPeriod(item.datePublished)
+
+                feedImage.load(item.imgUrl) {
+                    crossfade(true)
+                    error(R.drawable.error_outline_24)
+                    placeholder(R.drawable.ic_launcher_foreground)
+                }
+                root.setOnClickListener {
+                    listener?.let { it(item) }
+                }
+            }
         }
 
     }
@@ -34,25 +54,25 @@ class FeedsAdapter : ListAdapter<ItemsWithCategories, FeedsAdapter.ViewHolder>(d
     }
 
     companion object {
-        val diffObject = object : DiffUtil.ItemCallback<ItemsWithCategories>() {
+        val diffObject = object : DiffUtil.ItemCallback<Data>() {
             override fun areItemsTheSame(
-                oldItem: ItemsWithCategories,
-                newItem: ItemsWithCategories
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ItemsWithCategories,
-                newItem: ItemsWithCategories
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
-                return oldItem.content == newItem.content && oldItem.hashCode() == newItem.hashCode()
+                return oldItem.id == newItem.id && oldItem.hashCode() == newItem.hashCode()
             }
         }
     }
 
-    private var listener: ((ItemsWithCategories) -> Unit)? = null
-    fun adapterClick(listener: (ItemsWithCategories) -> Unit) {
+    private var listener: ((Data) -> Unit)? = null
+    fun adapterClick(listener: (Data) -> Unit) {
         this.listener = listener
     }
 }

@@ -14,7 +14,7 @@ BookmarkFragment : Fragment() {
 
     private var _binding: FragmentBookmarkBinding? = null
     private val binding get() = _binding!!
-    private val feedsAdapter by lazy { FeedsAdapter() }
+//    private val feedsAdapter by lazy { FeedsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +27,8 @@ BookmarkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.newsRecyclerView.adapter = feedsAdapter
-
-        feedsAdapter.submitList(DummyItem.getData())
+//        binding.newsRecyclerView.adapter = feedsAdapter
+//
+//        feedsAdapter.submitList(DummyItem.getData())
     }
 }

@@ -1,23 +1,35 @@
 package com.miniweam.quickread.adapters
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.miniweam.quickread.ItemsWithCategories
 import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.SearchResultViewholderBinding
-
-class FeedsSearchAdapter:  ListAdapter<ItemsWithCategories, FeedsSearchAdapter.ViewHolder>(
-    diffObject
-) {
+import com.miniweam.quickread.model.Data
+import com.miniweam.quickread.util.getDateFormatAsPeriod
+@RequiresApi(Build.VERSION_CODES.O)
+class FeedsSearchAdapter:  ListAdapter<Data, FeedsSearchAdapter.ViewHolder>(diffObject) {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = SearchResultViewholderBinding.bind(view)
-        fun bind(item: ItemsWithCategories) {
-            binding.feedTitle.text = item.content
-            binding.timeStamp.text = "${item.timeStamp}hrs ago"
+
+        fun bind(item: Data) {
+            binding.feedTitle.text = item.title
+            binding.timeStamp.text = getDateFormatAsPeriod(item.datePublished)
+            binding.feedImage.load(item.imgUrl) {
+                crossfade(true)
+                error(R.drawable.error_outline_24)
+                placeholder(R.drawable.ic_launcher_foreground)
+            }
+            binding.root.setOnClickListener {
+                listener?.let { it(item) }
+            }
         }
 
     }
@@ -34,25 +46,25 @@ class FeedsSearchAdapter:  ListAdapter<ItemsWithCategories, FeedsSearchAdapter.V
     }
 
     companion object {
-        val diffObject = object : DiffUtil.ItemCallback<ItemsWithCategories>() {
+        val diffObject = object : DiffUtil.ItemCallback<Data>() {
             override fun areItemsTheSame(
-                oldItem: ItemsWithCategories,
-                newItem: ItemsWithCategories
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ItemsWithCategories,
-                newItem: ItemsWithCategories
+                oldItem: Data,
+                newItem: Data
             ): Boolean {
-                return oldItem.content == newItem.content && oldItem.hashCode() == newItem.hashCode()
+                return oldItem.id == newItem.id && oldItem.title == newItem.title
             }
         }
     }
 
-    private var listener: ((ItemsWithCategories) -> Unit)? = null
-    fun adapterClick(listener: (ItemsWithCategories) -> Unit) {
+    private var listener: ((Data) -> Unit)? = null
+    fun adapterClick(listener: (Data) -> Unit) {
         this.listener = listener
     }
 }
