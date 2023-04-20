@@ -13,21 +13,21 @@ import coil.size.Scale
 import com.miniweam.quickread.ItemsWithCategories
 import com.miniweam.quickread.R
 import com.miniweam.quickread.databinding.FeedsViewholderBinding
-import com.miniweam.quickread.model.Data
+import com.miniweam.quickread.model.NewsData
 import com.miniweam.quickread.util.getDateFormatAsPeriod
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
-class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
+class BookmarksAdapter : ListAdapter<NewsData, BookmarksAdapter.ViewHolder>(diffObject) {
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = FeedsViewholderBinding.bind(view)
-        fun bind(item: Data) {
+        fun bind(item: NewsData) {
             binding.apply {
                 feedTitle.text = item.title
                 timeStamp.text = getDateFormatAsPeriod(item.datePublished)
 
-                feedImage.load(item.imgUrl) {
+                feedImage.load(item.imageUrl) {
                     crossfade(true)
                     error(R.drawable.error_outline_24)
                     placeholder(R.drawable.ic_launcher_foreground)
@@ -52,25 +52,25 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
     }
 
     companion object {
-        val diffObject = object : DiffUtil.ItemCallback<Data>() {
+        val diffObject = object : DiffUtil.ItemCallback<NewsData>() {
             override fun areItemsTheSame(
-                oldItem: Data,
-                newItem: Data
+                oldItem: NewsData,
+                newItem: NewsData
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: Data,
-                newItem: Data
+                oldItem: NewsData,
+                newItem: NewsData
             ): Boolean {
                 return oldItem.id == newItem.id && oldItem.hashCode() == newItem.hashCode()
             }
         }
     }
 
-    private var listener: ((Data) -> Unit)? = null
-    fun adapterClick(listener: (Data) -> Unit) {
+    private var listener: ((NewsData) -> Unit)? = null
+    fun adapterClick(listener: (NewsData) -> Unit) {
         this.listener = listener
     }
 }
