@@ -2,25 +2,23 @@ package com.miniweam.quickread.fragments
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.miniweam.quickread.DummyItem.getCategories
-import com.miniweam.quickread.DummyItem.getData
 import com.miniweam.quickread.adapters.FeedsAdapter
 import com.miniweam.quickread.adapters.FeedsCategoryAdapter
 import com.miniweam.quickread.arch.FeedState
 import com.miniweam.quickread.arch.FeedsViewModel
+import com.miniweam.quickread.arch.FeedsViewModelFactory
 import com.miniweam.quickread.databinding.FragmentHomeBinding
-import com.miniweam.quickread.util.ApiService
-import kotlinx.coroutines.flow.collect
+import com.miniweam.quickread.db.QrDatabase
 import kotlinx.coroutines.launch
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -29,7 +27,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private val categoryAdapter by lazy { FeedsCategoryAdapter() }
     private val feedsAdapter by lazy { FeedsAdapter() }
-    private val viewModel by activityViewModels<FeedsViewModel>()
+    private val viewModel by activityViewModels<FeedsViewModel>{FeedsViewModelFactory(QrDatabase.getDatabase(requireContext()))}
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +41,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.newsRecyclerView.adapter = feedsAdapter
-        binding.categoryRecyclerView.adapter = categoryAdapter
 
         categoryAdapter.submitList(getCategories())
         lifecycleScope.launch {

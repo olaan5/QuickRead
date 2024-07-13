@@ -25,8 +25,6 @@ class FeedsAdapter : ListAdapter<Data, FeedsAdapter.ViewHolder>(diffObject) {
         fun bind(item: Data) {
             binding.apply {
                 feedTitle.text = item.title
-                categoryText.text = "Category"
-                sourceText.text = "Source"
                 timeStamp.text = getDateFormatAsPeriod(item.datePublished)
 
                 feedImage.load(item.imgUrl) {

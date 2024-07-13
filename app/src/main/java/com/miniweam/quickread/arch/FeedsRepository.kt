@@ -1,11 +1,14 @@
 package com.miniweam.quickread.arch
 
 import android.util.Log
+import com.miniweam.quickread.db.QrDatabase
 import com.miniweam.quickread.model.Data
+import com.miniweam.quickread.model.NewsData
 import com.miniweam.quickread.util.ApiService
 import kotlinx.coroutines.flow.Flow
 
-class FeedsRepository {
+class FeedsRepository(private val qrDb:QrDatabase) {
+    private val qrDao = qrDb.qrDao()
     suspend fun getAllFeeds(): FeedState {
         return try {
             val body = ApiService.qrApiService.getAllNews()
@@ -30,4 +33,16 @@ class FeedsRepository {
             FeedState.Failure(e.toString())
         }
     }
+
+    fun getAllNewsFromDb()= qrDao.getAllNews()
+
+    suspend fun insertNews(newsData: NewsData){
+        qrDao.insertNews(newsData)
+    }
+
+    suspend fun deleteNews(newsData: NewsData){
+        qrDao.deleteNews(newsData.id)
+    }
+
+    suspend fun checkIfNewsExists(id: Int) = qrDao.checkIfNewsExists(id)
 }

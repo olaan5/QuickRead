@@ -2,12 +2,14 @@ package com.miniweam.quickread.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -18,8 +20,11 @@ import coil.size.Scale
 import com.miniweam.quickread.R
 import com.miniweam.quickread.arch.FeedState
 import com.miniweam.quickread.arch.FeedsViewModel
+import com.miniweam.quickread.arch.FeedsViewModelFactory
 import com.miniweam.quickread.databinding.FragmentBookmarkBinding
 import com.miniweam.quickread.databinding.FragmentNewsSummaryBinding
+import com.miniweam.quickread.db.QrDatabase
+import com.miniweam.quickread.model.NewsData
 import com.miniweam.quickread.util.DEFAULT_DATE_FORMAT
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -30,7 +35,7 @@ import java.util.*
 class NewsSummaryFragment : Fragment() {
     private var _binding: FragmentNewsSummaryBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by activityViewModels<FeedsViewModel>()
+    private val viewModel by activityViewModels<FeedsViewModel>{FeedsViewModelFactory(QrDatabase.getDatabase(requireContext()))}
     private val args by navArgs<NewsSummaryFragmentArgs>()
 
 
@@ -72,6 +77,10 @@ class NewsSummaryFragment : Fragment() {
                 }
                 is FeedState.Successful->{
                     binding.apply {
+                        val data = state.newsResponseBody.data
+                        lifecycleScope.launch {
+                            runBookmarkOp(data)
+                        }
                         titleText.text =state.newsResponseBody.data.title
                         contentText.text =state.newsResponseBody.data.content
                         authorText.text ="Unknown Author"
@@ -82,6 +91,7 @@ class NewsSummaryFragment : Fragment() {
                         }
                         emptyStateTv.isVisible = false
                         progressBar.isVisible = false
+
                     }
                 }
                 is FeedState.Failure->{
@@ -111,4 +121,45 @@ class NewsSummaryFragment : Fragment() {
         return localDate.format(dateFormatter)
     }
 
-}
+    private fun runBookmarkOp(data: NewsData){
+        viewModel.checkIfBookMarked(data.id)
+        lifecycleScope.launch {
+            viewModel.bookMarkedState.collect{value->
+                when(value){
+                    -1-> Unit
+                    0->{
+                        Toast.makeText(
+                            requireContext(),
+                            "Not Bookmarked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("JOEJOE", "getNewsById: Not bookmarked -- $value")
+                        binding.bookmarkIv.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bookmark_unchecked))
+                        binding.bookmarkIv.setOnClickListener {
+                            viewModel.addToBookMarks(data)
+                        }
+                    }
+                    else->{
+                        Toast.makeText(
+                            requireContext(),
+                            "Bookmarked",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.bookmarkIv.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.bookmark_checked))
+                        binding.bookmarkIv.setOnClickListener {
+                            viewModel.removeFromBookMarks(data)
+                        }
+
+                        Log.d("JOEJOE", "getNewsById: Bookmarked -- $value")
+                    }
+                }
+            }
+
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.resetBookmarkedState()
+    }
+    }
